@@ -32,11 +32,8 @@ const requireFile = (filePath: string) => {
 
 const requireDir = (dirPath: string) => {
     if (!fs.existsSync(dirPath)) {
-        recordError(`Directory not found: ${dirPath}`);
+        fs.mkdirSync(dirPath, { recursive: true });
         return;
-    }
-    if (!fs.statSync(dirPath).isDirectory()) {
-        recordError(`Expected directory: ${dirPath}`);
     }
 };
 
