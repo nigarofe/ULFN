@@ -1,0 +1,53 @@
+@media print {
+    @page {
+        margin-top: 10mm;
+        margin-bottom: 10mm;
+        margin-left: 10mm;
+        margin-right: 10mm;
+        size: a4 portrait;
+
+        /* a7 landscape - Good for mobile devices */
+        /* size: 105mm 74mm;
+        margin: 0mm;
+        padding: 0mm; */
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        /* Prevents a page break right after the heading */
+        break-after: avoid;
+        /* Older syntax for compatibility with some browsers */
+        page-break-after: avoid;
+        /* Prevents heading fragmentation across pages */
+        padding-top: .1rem;
+
+        color: black !important;
+    }
+
+    li::marker {
+        color: black !important;
+    }
+
+    .document-card,
+    #playlist-controls,
+    .document-srm,
+    .open-at-vscode,
+    footer {
+        display: none !important;
+    }
+
+    #TOC a {
+        border: 1px solid red;
+    }
+
+
+    .no-print,
+    .attempts-section,
+    .attempts-section~* {
+        display: none !important;
+    }
+}

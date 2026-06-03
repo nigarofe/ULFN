@@ -1,0 +1,44 @@
+#TOC {
+    padding: 0 0 var(--heading-spacing);
+    margin: 0 0 var(--heading-spacing);
+}
+
+#TOC a {
+    text-decoration: none;
+    color: black;
+}
+
+#TOC h1 {
+    color: black;
+}
+
+#TOC ul {
+    list-style: none;
+}
+
+#TOC>ul {
+    padding-left: 0;
+}
+
+#TOC>ul>li>a {
+    font-weight: 600;
+
+}
+
+#TOC>ul>li {
+    margin: 1rem 0;
+}
+
+#TOC li:last-child,
+#TOC ul:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#TOC li li {
+    margin: 0.25rem 0;
+}
+
+.toc-section-number {
+    margin-right: 0.5rem;
+}

@@ -1,0 +1,31 @@
+{
+  "name": "ulfn",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "ulfn-server": "npx tsx --watch server/index.ts",
+    "vite-server": "node -e \"const net=require('net');(function check(){const s=net.connect(3001,'127.0.0.1');s.on('connect',()=>{s.end();process.exit(0);});s.on('error',()=>setTimeout(check,200));})();\" && npx vite",
+    "pandoc-server": "pandoc server --port 3030"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "playwright": "^1.60.0",
+    "tsx": "^4.22.4",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16"
+  },
+  "dependencies": {
+    "@breezystack/lamejs": "^1.2.7",
+    "chart.js": "^4.5.1",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "gray-matter": "^4.0.3",
+    "katex": "^0.17.0",
+    "mermaid": "^11.15.0",
+    "morphdom": "^2.7.8",
+    "zod": "^4.4.3"
+  }
+}

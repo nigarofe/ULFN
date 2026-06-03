@@ -1,0 +1,40 @@
+.mc-option {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid var(--brand-light);
+    background: var(--surface-base);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mc-option:hover {
+    border-color: var(--brand-dark);
+    background-color: var(--surface-base);
+}
+
+.mc-option--correct {
+    border-color: #16a34a;
+    background-color: #ecfdf3;
+    color: #14532d;
+}
+
+.mc-option--correct::after {
+    content: " \2714";
+    font-weight: bold;
+}
+
+.mc-option--incorrect {
+    border-color: #dc2626;
+    background-color: #fef2f2;
+    color: #7f1d1d;
+}
+
+.mc-option--incorrect::after {
+    content: " \2717";
+    font-weight: bold;
+}

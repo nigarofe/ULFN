@@ -1,0 +1,47 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Vite Dev Server",
+            "type": "shell",
+            "command": "npm run vite-server",
+            "isBackground": true,
+            "presentation": {
+                "group": "start-all-group",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Run ULFN Server",
+            "type": "shell",
+            "command": "npm run ulfn-server",
+            "isBackground": true,
+            "presentation": {
+                "group": "start-all-group",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Run Pandoc Server",
+            "type": "shell",
+            "command": "npm run pandoc-server",
+            "isBackground": true,
+            "presentation": {
+                // "group": "start-all-group",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Start All",
+            "dependsOn": [
+                "Run Pandoc Server",
+                "Run ULFN Server",
+                "Run Vite Dev Server"
+            ],
+            "runOptions": {
+                // "runOn": "folderOpen"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

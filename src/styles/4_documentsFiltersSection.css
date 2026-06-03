@@ -1,0 +1,48 @@
+.exercises-filters-section {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    font-size: 0.85rem;
+}
+
+.exercises-filters-section div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.exercises-filters-section label {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.exercises-filters-section select {
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid black;
+    background-color: transparent;
+    border-radius: var(--border-radius);
+    padding: 0.7rem 2.5rem 0.7rem 0.9rem;
+}
+
+.exercises-filters-section select:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.exercises-filters-section div::after {
+    content: " \21E9";
+    font-size: 1rem;
+    color: gray;
+
+    position: absolute;
+    right: 1rem;
+    bottom: 0.5rem;
+
+    pointer-events: none;
+}
+
+.exercises-filters-section {
+    outline: none;
+    border-color: gray;
+}

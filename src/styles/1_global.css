@@ -1,0 +1,164 @@
+:root {
+  font-size: 12pt;
+  /* font-size: 18px; */
+  font-family: Arial;
+  line-height: 1.2rem;
+
+  --brand: rgb(0, 122, 204);
+  --brand-light: rgba(0, 122, 204, 0.3);
+  --brand-dark: rgb(0, 82, 153);
+
+  --heading-spacing: 2rem;
+
+  --header-footer-border-width: 6px;
+  --header-footer-border-style: double;
+  --header-footer-border-color: #000000;
+  --header-footer-button-padding: 0.5rem 1rem;
+  --header-footer-button-radius: 0;
+  --header-footer-button-bg: transparent;
+  --header-footer-button-text: black;
+  --header-footer-hover-scale: 1.08;
+
+  --text-white: white;
+  --text-muted: gray;
+
+  --border-radius: .5rem;
+  --wh-text: goldenrod;
+  --woh-text: green;
+
+  --surface-base: #ffffff;
+}
+
+body.loading,
+body.loading * {
+  cursor: wait !important;
+}
+
+/* li::marker {
+  color: var(--brand);
+} */
+
+
+
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+
+body {
+  max-width: 95vw;
+  margin: 0 auto;
+
+  /* Single background system (gradient + texture). */
+  --page-bg-color: linear-gradient(180deg, rgba(255, 255, 0, 0.15) 0%, rgba(255, 100, 100, 0.15) 100%);
+  --page-bg-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  --page-bg-size-base: 182px;
+  --page-bg-blend: multiply;
+
+  --page-bg-size: var(--page-bg-size-base);
+
+  background-color: transparent;
+  background-image: var(--page-bg-color), var(--page-bg-texture);
+  background-repeat: repeat;
+  background-size: var(--page-bg-size);
+  background-blend-mode: var(--page-bg-blend);
+}
+
+
+
+
+@media (min-width: 800px) {
+  body {
+    max-width: 75vw;
+  }
+}
+
+
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header span {
+  color: var(--text-muted);
+  margin-top: 0;
+}
+
+
+.exercises-filters-section,
+.document-card,
+#exercise-content,
+footer>section {
+  margin: 1.5rem 0;
+}
+
+#exercise-content {
+  padding: 0 1.5rem;
+  text-align: justify;
+}
+
+
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  height: 20rem;
+  margin: 2rem 0;
+  border: 2px solid black;
+  padding: 1rem 1rem;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.dashboard-container>div {
+  position: relative;
+  min-width: 0;
+}
+
+
+
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.wh-text {
+  color: var(--wh-text);
+}
+
+.woh-text {
+  color: var(--woh-text);
+}
+
+.playlist-link,
+.playlist-link:visited {
+  color: black;
+}
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.mermaid p {
+  white-space: normal;
+}

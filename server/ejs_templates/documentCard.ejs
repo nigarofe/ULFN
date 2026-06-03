@@ -1,0 +1,83 @@
+<div class="document-card">
+    <div class="document-card-number" data-id="<%= element['ID'] %>">
+        <%= element['ID'] %>
+    </div>
+
+    <div class="document-card-metadata" data-id="<%= element['ID'] %>">
+        <p><span>Classification:</span>
+            <%= element['Classification'] %>
+        </p>
+        <p><span>Discipline:</span>
+            <%= element['Discipline'] %>
+        </p>
+        <p><span>Source:</span>
+            <%= element['Source'] %>
+        </p>
+        <p><span>Description:</span>
+            <%= element['Description'] %>
+        </p>
+    </div>
+
+    <div class="document-srm" data-id="<%= element['ID'] %>">
+        <div class="document-srm-first-row">
+            <div class="attempts-summary">
+                <dd>Attempts Summary</dd>
+                <dt>
+                    <%= element['SRME']['Total Attempts'] %> -
+                        <span class="woh-text">
+                            <%= element['SRME']['Attempts Without Help'] %>
+                        </span> -
+                        <span class="wh-text">
+                            <%= element['SRME']['Attempts With Help'] %>
+                        </span>
+                </dt>
+            </div>
+
+            <div class="LAS">
+                <dd>LAS</dd>
+                <dt>
+                    <% let lasClass='' ; if (element['SRME']['LAS']==='Without Help' ) { lasClass='woh-text' ; } else if
+                        (element['SRME']['LAS']==='With Help' ) { lasClass='wh-text' ; } %>
+                        <span class="<%= lasClass %>">
+                            <%- element['SRME']['LAS'] || '&nbsp;' %>
+                        </span>
+                </dt>
+            </div>
+        </div>
+
+        <div class="document-srm-second-row">
+            <div class="DSLA">
+                <dd>DSLA</dd>
+                <dt>
+                    <%- element['SRME']['DSLA'] || '&nbsp;' %>
+                </dt>
+            </div>
+            <div class="LaMI">
+                <dd>LaMI</dd>
+                <dt>
+                    <%- element['SRME']['LaMI'] || '&nbsp;' %>
+                </dt>
+            </div>
+        </div>
+
+        <div class="document-srm-third-row">
+            <div class="PMG-D">
+                <dd>PMG-D</dd>
+                <dt>
+                    <%- element['SRME']['PMG-D'] || '&nbsp;' %>
+                </dt>
+            </div>
+            <div class="PMG-X">
+                <dd>PMG-X</dd>
+                <dt>
+                    <%- element['SRME']['PMG-X'] || '&nbsp;' %>
+                </dt>
+            </div>
+        </div>
+    </div>
+
+    <div class="open-at-vscode" data-id="<%= element['ID'] %>">
+        <img src='/icons/vscode.svg' alt="VSCode Logo" />
+        <span id="openAtVSCodeSpan">Open at VSCode</span>
+    </div>
+</div>

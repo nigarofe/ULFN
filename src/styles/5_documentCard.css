@@ -1,0 +1,180 @@
+/* Document cards */
+/* The main card container */
+.document-card {
+    display: grid;
+    /* Define your columns here!
+    Col 1 (Number): 5rem
+    Col 2 (Text):   1fr (Takes remaining space)
+    Col 3 (SRM):    20rem
+    Col 4 (VSCode): auto (Fits content)
+    */
+    /* grid-template-columns: 5rem 1fr 20rem auto; */
+    grid-template-columns: 5rem 1fr 1fr 20%;
+
+    align-items: stretch;
+    border: 2px solid black;
+    border-radius: 0;
+    font-family: sans-serif;
+    overflow: hidden;
+
+    margin: 2rem 0;
+}
+
+.document-card img {
+    width: 60%;
+    height: auto;
+}
+
+/* Left side: The number */
+.document-card-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-right: 2px solid black;
+    color: black;
+}
+
+/* 1. Target the box itself when either child is hovered */
+.document-card:has(.document-card-number:hover, .document-card-metadata:hover, .document-srm:hover) {
+    border-color: black;
+    cursor: pointer;
+}
+
+/* 2. Target all children of the box when either child is hovered */
+.document-card:has(.document-card-number:hover, .document-card-metadata:hover, .document-srm:hover) * {
+    border-color: black;
+}
+
+/* Target .document-card-number when either child is hovered */
+.document-card:has(.document-card-number:hover, .document-card-metadata:hover, .document-srm:hover) .document-card-number {
+    border-right: 2px solid black;
+    background-color: black;
+    color: white;
+}
+
+/* Right side: The text content */
+.document-card-metadata {
+    padding: 0rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: justify;
+}
+
+.document-card-metadata p {
+    margin: 0.5rem 0;
+}
+
+/* Blue labels (links in your image) */
+.document-card-metadata span {
+    color: var(--text-muted);
+}
+
+
+
+
+
+
+
+
+
+
+/* Spaced-Repetition-Metrics (SRM) component */
+.document-srm {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border-left: 2px solid black;
+    justify-content: space-around;
+}
+
+/* Common style for all rows to align internal items */
+.document-srm-first-row,
+.document-srm-second-row,
+.document-srm-third-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1;
+}
+
+.document-srm-first-row div:nth-child(1),
+.document-srm-second-row div:nth-child(1),
+.document-srm-third-row div:nth-child(1) {
+    border-right: 2px solid black;
+    align-self: stretch;
+}
+
+.document-srm-first-row,
+.document-srm-second-row {
+    border-bottom: 2px solid black;
+}
+
+.document-srm-first-row>div,
+.document-srm-second-row>div,
+.document-srm-third-row>div {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /* Keeps dd and dt stacked vertically */
+    justify-content: center;
+}
+
+.document-srm dt,
+.document-srm dd {
+    text-align: left;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.document-srm dd {
+    color: var(--text-muted);
+    font-size: .8rem;
+    margin: .3rem .3rem .4rem;
+}
+
+.document-srm dt {
+    text-align: center;
+    font-weight: 600;
+    margin: 0 1rem .5rem;
+    line-height: 1.2;
+}
+
+
+
+
+
+
+
+
+
+
+.open-at-vscode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    align-self: stretch;
+    gap: 1rem;
+
+    padding: 0 1rem;
+    border-left: 2px solid black;
+
+    font-size: 0.8rem;
+    text-align: center;
+    color: var(--text-muted);
+
+    cursor: pointer;
+}
+
+.open-at-vscode:hover {
+    color: white;
+}
+
+.open-at-vscode:hover img {
+    transform: scale(1.1);
+}

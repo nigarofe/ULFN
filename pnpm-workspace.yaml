@@ -1,0 +1,9 @@
+minimumReleaseAge: 10080 # 7 days
+
+allowBuilds:
+  esbuild: true
+
+minimumReleaseAgeExclude:
+  - tinyglobby@0.2.17
+  - tsx@4.22.4
+  - vite@8.0.16

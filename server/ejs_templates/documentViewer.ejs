@@ -1,0 +1,87 @@
+<%- include('playlistControls.ejs'), { element, hideMetadata: true } %>
+
+    <div class="document-title double-line-top">
+        <span class="document-title-text">Document <%- element['ID'] %></span>
+        <button class="open-at-vscode" type="button" data-id="<%- element['ID'] %>" title="Open in VS Code"
+            aria-label="Open in VS Code">
+            <img src='/icons/vscode.svg' alt="VSCode Logo" />
+        </button>
+    </div>
+
+    <table class="no-print" style="margin: 0 0 2rem; width: 100%; table-layout: fixed;">
+        <colgroup>
+            <col style="width: 25%;" />
+            <col style="width: 25%;" />
+            <col style="width: 25%;" />
+            <col style="width: 25%;" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align: center;">SRME</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Attempts summary</strong></td>
+                <td>
+                    <%= element['SRME']['Total Attempts'] %> -
+                        <span class="woh-text">
+                            <%= element['SRME']['Attempts Without Help'] %>
+                        </span> -
+                        <span class="wh-text">
+                            <%= element['SRME']['Attempts With Help'] %>
+                        </span>
+                </td>
+                <td><strong>LAS</strong></td>
+                <td>
+                    <% let lasClass='' ; if (element['SRME']['LAS']==='Without Help' ) { lasClass='woh-text' ; } else if
+                        (element['SRME']['LAS']==='With Help' ) { lasClass='wh-text' ; } %>
+                        <span class="<%= lasClass %>">
+                            <%= element['SRME']['LAS'] %>
+                        </span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>DSLA</strong></td>
+                <td><%- element['SRME']['DSLA'] || '&nbsp;' %></td>
+                <td><strong>LaMI</strong></td>
+                <td><%- element['SRME']['LaMI'] || '&nbsp;' %></td>
+            </tr>
+            <tr>
+                <td><strong>PMG-D</strong></td>
+                <td><%- element['SRME']['PMG-D'] || '&nbsp;' %></td>
+                <td><strong>PMG-X</strong></td>
+                <td><%- element['SRME']['PMG-X'] || '&nbsp;' %></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table style="margin: 0 0 2rem; width: 100%; table-layout: fixed;">
+        <thead>
+            <tr>
+                <th colspan=" 2" style="text-align: center;">Metadata</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Classification</strong></td>
+                <td><%- element['Classification'] || '' %></td>
+            </tr>
+            <tr>
+                <td><strong>Discipline</strong></td>
+                <td><%- element['Discipline'] || '' %></td>
+            </tr>
+            <tr>
+                <td><strong>Source</strong></td>
+                <td><%- element['Source'] || '' %></td>
+            </tr>
+            <tr>
+                <td><strong>Description</strong></td>
+                <td><%- element['Description'] || '' %></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="exercise-content"><%- contentHTML %></div>
+
+    <%- include('documentFooter.ejs') %>

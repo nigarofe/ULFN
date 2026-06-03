@@ -1,0 +1,157 @@
+@media (min-width: 800px) {
+    footer>section {
+        border-radius: 0;
+        width: 100%;
+    }
+}
+
+footer>section {
+    margin-top: 6rem;
+    border-top: 6px double black;
+    border-bottom: 6px double black;
+}
+
+footer h2 {
+    margin-top: 0;
+}
+
+header {
+    margin-bottom: 0;
+}
+
+#playlist-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin: 2rem 0
+}
+
+footer>div {
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 1.5rem 0;
+}
+
+header button,
+footer button {
+    border: none;
+    background-color: var(--header-footer-button-bg);
+    color: var(--header-footer-button-text);
+    font-size: 1rem;
+    border-bottom: var(--header-footer-border-width) var(--header-footer-border-style) var(--header-footer-border-color);
+    border-top: var(--header-footer-border-width) var(--header-footer-border-style) var(--header-footer-border-color);
+    padding: var(--header-footer-button-padding);
+    border-radius: var(--header-footer-button-radius);
+    cursor: pointer;
+}
+
+header button {
+    margin: 0;
+}
+
+header button:hover,
+footer button:hover {
+    transform: scale(var(--header-footer-hover-scale));
+}
+
+
+header button:first-child::before,
+header button:first-child::after {
+    content: " << ";
+}
+
+header button:last-child::before,
+header button:last-child::after {
+    content: " >> ";
+}
+
+.startStopButtons {
+    width: clamp(240px, calc(60rem - 10vw), 520px);
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.startStopButtons button {
+    flex: 1;
+}
+
+footer button {
+    text-align: center;
+    margin: 0 0;
+}
+
+.footer-buttons button {
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+
+#voice-recorder {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+#copy-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+}
+
+
+#voice-recorder span {
+    font-size: 1.5rem;
+    font-family: monospace;
+}
+
+#voice-recorder audio {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-bottom: 2rem;
+}
+
+audio::-webkit-media-controls-panel,
+audio::-webkit-media-controls-enclosure {
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+@media (max-width: 700px) {
+
+    #playlist-controls,
+    footer>div {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    header button:first-child::before,
+    header button:first-child::after,
+    header button:last-child::before,
+    header button:last-child::after {
+        content: "";
+    }
+
+    header button,
+    footer button {
+        width: 100%;
+    }
+}
