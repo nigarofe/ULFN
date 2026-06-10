@@ -50,7 +50,7 @@ export const PLAYLISTS_CONFIG: PlaylistsConfig[] = [
         subfolders: [
             {
                 subfolder: 'Preparação P3 - Provas anteriores',
-                playlist: []
+                playlist: [281, 282, 283]
             },
             {
                 subfolder: 'Preparação P3 - Anotações das aulas',
