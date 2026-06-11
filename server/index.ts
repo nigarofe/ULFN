@@ -84,19 +84,23 @@ app.get('/events', (req: Request, res: Response) => {
 });
 
 
-
 fs.watch(DOCUMENTS_DIR, (_eventType, filename) => {
     if (!filename || !filename.endsWith('.md')) { return; }
     const updatedId = parseInt(filename.replace('.md', ''));
     clearTimeout(timeout);
 
-    timeout = setTimeout(() => {
-        clients.forEach(async client => {
-            if (client.documentId !== updatedId) { return; }
-            logMessage(`INFO: Document ${updatedId} was changed and it's currently being viewed. Sending update to client.`);
-            const result = await getDocumentViewerBodyHTML(client.documentId);
-            client.res.write(`data: ${JSON.stringify({ html: result })}\n\n`);
-            logMessage(`INFO: Document ${updatedId} update sent to client.`);
-        });
+    timeout = setTimeout(async () => {
+        for (const client of clients) {
+            if (client.documentId !== updatedId) { continue; }
+            try {
+                logMessage(`INFO: Document ${updatedId} was changed and it's currently being viewed. Sending update to client.`);
+                const result = await getDocumentViewerBodyHTML(client.documentId);
+                client.res.write(`data: ${JSON.stringify({ html: result })}\n\n`);
+                logMessage(`INFO: Document ${updatedId} update sent to client.`);
+            } catch (err) {
+                const message = err instanceof Error ? err.message : String(err);
+                logMessage(`ERROR: Failed to send update for document ${updatedId}: ${message}`);
+            }
+        }
     }, 100);
 });
