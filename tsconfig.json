@@ -29,5 +29,6 @@
     "vite.config.ts",
     "vite_plugins",
     "config.ts",
+    "playlists.config.ts",
   ]
 }

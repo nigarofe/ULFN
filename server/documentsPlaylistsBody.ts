@@ -1,4 +1,4 @@
-import { PLAYLISTS_CONFIG, type PlaylistsConfig } from './playlists.config';
+import { PLAYLISTS_CONFIG, type PlaylistsConfig } from '../playlists.config';
 
 const htmlEscapeMap: Record<string, string> = {
     '&': '&amp;',

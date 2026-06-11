@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 import { VITE_SERVER_URL } from '../config';
-import { PLAYLISTS_CONFIG } from './playlists.config';
+import { PLAYLISTS_CONFIG } from '../playlists.config';
 
 type exportGroup = {
     directorySegments: string[];
