@@ -1,7 +1,7 @@
 {
   "name": "ulfn",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "ulfn-server": "npx tsx --watch server/index.ts",
