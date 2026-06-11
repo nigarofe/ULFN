@@ -4,10 +4,6 @@ import matter from 'gray-matter';
 
 import { DOCUMENTS_DIR } from './../config'
 
-interface Document {
-    rawContent: string;
-    id: number;
-}
 const classificationCounts: Record<string, number> = {};
 
 const documents = fs.readdirSync(DOCUMENTS_DIR)
@@ -23,7 +19,7 @@ console.log(`Number of documents: ${documents.length}`);
 
 const requiredFields = ['Classification', 'Discipline', 'Source', 'Description'];
 
-documents.forEach((doc, index) => {
+documents.forEach((doc, _index) => {
     const { data } = matter(doc.rawContent);
 
     // Check if they all contain the required YAML fields
