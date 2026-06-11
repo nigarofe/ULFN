@@ -130,13 +130,13 @@
     word-break: break-word;
 }
 
-.document-srm dd {
+.document-srm dt {
     color: var(--text-muted);
     font-size: .8rem;
     margin: .3rem .3rem .4rem;
 }
 
-.document-srm dt {
+.document-srm dd {
     text-align: center;
     font-weight: 600;
     margin: 0 1rem .5rem;

@@ -18,10 +18,9 @@ export function snippet_expander(): Plugin {
                     const content = await fsp.readFile(filePath, 'utf-8');
                     let updatedContent = "";
 
-                    if (content.includes('/timestamp') || content.includes('/ts')) {
+                    if (content.includes('/ts')) {
                         const isoTimestamp = new Date().toISOString().slice(0, -5) + 'Z';
-                        updatedContent = content.replace(/\/timestamp/g, isoTimestamp);
-                        updatedContent = updatedContent.replace(/\/ts/g, isoTimestamp);
+                        updatedContent = content.replace(/\/ts/g, isoTimestamp);
                     }
 
                     if (content.includes('/fbe')) {

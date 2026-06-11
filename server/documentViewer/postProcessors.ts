@@ -103,7 +103,7 @@ function postProcessorMultipleChoiceExercise(html: string): string {
             const className = isChecked ? "mc-option shouldBeSelected" : "mc-option";
 
             matches.push(`
-                <button class="${className}" onclick="checkIfOptionWasSelectedCorrectly(this);">
+                <button class="${className}">
                     <span class="option-text">${content}</span>
                 </button>`.trim());
         }
