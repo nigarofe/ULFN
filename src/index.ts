@@ -1,3 +1,5 @@
+import 'katex/dist/katex.min.css';
+
 // Load all stylesheets at the /src/styles folder.
 const stylesheets = import.meta.glob('./styles/*.css', { eager: true });
 if (!Object.keys(stylesheets).length) { throw new Error('No stylesheets found in /src/styles'); }
@@ -24,10 +26,9 @@ switch (window.location.pathname) {
 
 
 const updateTextureScale = () => {
-    const body = document.body;
-    if (!body) { return; }
+    const root = document.documentElement;
 
-    const baseSize = getComputedStyle(body).getPropertyValue('--page-bg-size-base').trim();
+    const baseSize = getComputedStyle(root).getPropertyValue('--page-bg-size-base').trim() || '182px';
     if (!baseSize) { return; }
 
     const baseValue = parseFloat(baseSize);
@@ -37,7 +38,7 @@ const updateTextureScale = () => {
     const ratio = window.devicePixelRatio || 1;
     const scaledValue = baseValue / ratio;
 
-    body.style.setProperty('--page-bg-size', `${scaledValue}${baseUnit}`);
+    root.style.setProperty('--page-bg-size', `${scaledValue}${baseUnit}`);
 };
 
 const initTextureScale = () => {
