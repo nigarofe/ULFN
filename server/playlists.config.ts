@@ -117,8 +117,8 @@ export const PLAYLISTS_CONFIG: PlaylistsConfig[] = [
                 playlist: [273]
             },
             {
-                subfolder: 'Performance and implementation',
-                playlist: []
+                subfolder: 'Specifications for LLMs',
+                playlist: [284]
             },
             {
                 subfolder: 'Showcases',
