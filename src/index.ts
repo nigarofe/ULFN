@@ -1,31 +1,28 @@
-const pageScript = document.createElement('script');
-pageScript.type = 'module';
+// Load all stylesheets at the /src/styles folder.
+const stylesheetLoaders = import.meta.glob('./styles/*.css');
+const stylesheetEntries = Object.entries(stylesheetLoaders);
+if (!stylesheetEntries.length) { throw new Error('No stylesheets found in /src/styles'); }
+stylesheetEntries.forEach(([, loadStylesheet]) => { loadStylesheet(); });
+
 
 switch (window.location.pathname) {
     case '/documentSelector':
-        pageScript.src = '/src/documentSelector.ts';
+        await import('./documentSelector.ts');
         break;
     case '/documentViewer':
-        pageScript.src = '/src/documentViewer.ts';
+        await import('./documentViewer.ts');
         break;
     case '/documentValidator':
-        pageScript.src = '/src/documentValidator.ts';
+        await import('./documentValidator.ts');
         break;
     case '/documentsPlaylists':
-        pageScript.src = '/src/documentsPlaylists.ts';
+        await import('./documentsPlaylists.ts');
         break;
     default:
         window.location.pathname = '/documentsPlaylists';
         break;
 }
 
-document.head.appendChild(pageScript);
-
-// Load all stylesheets at the /src/styles folder.
-const stylesheetLoaders = import.meta.glob('./styles/*.css');
-const stylesheetEntries = Object.entries(stylesheetLoaders);
-if (!stylesheetEntries.length) { throw new Error('No stylesheets found in /src/styles'); }
-stylesheetEntries.forEach(([, loadStylesheet]) => { loadStylesheet(); });
 
 const updateTextureScale = () => {
     const body = document.body;
