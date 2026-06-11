@@ -110,7 +110,7 @@ export const PLAYLISTS_CONFIG: PlaylistsConfig[] = [
         subfolders: [
             {
                 subfolder: 'Software documentation',
-                playlist: [244, 267, 266, 259, 257]
+                playlist: [244, 267, 266, 257]
             },
             {
                 subfolder: 'General notes',
