@@ -5,10 +5,7 @@ import * as fs from 'fs';
 const bundleConfig = {
     bundled_code_1: {
         files: [
-        ]
-    },
-    bundled_code_2: {
-        files: [
+            'index.html'
         ]
     }
 };

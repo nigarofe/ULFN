@@ -84,6 +84,14 @@ app.get('/events', (req: Request, res: Response) => {
 });
 
 
+// Express requires all 4 parameters to recognize this as an error-handling middleware
+app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+    const message = err instanceof Error ? err.message : String(err);
+    logMessage(`ERROR: ${req.method} ${req.url} - ${message}`);
+    res.status(500).json({ error: 'Internal server error' });
+});
+
+
 fs.watch(DOCUMENTS_DIR, (_eventType, filename) => {
     if (!filename || !filename.endsWith('.md')) { return; }
     const updatedId = parseInt(filename.replace('.md', ''));
