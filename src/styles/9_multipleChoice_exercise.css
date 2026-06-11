@@ -4,8 +4,8 @@
     padding: 1rem 1.25rem;
     margin-bottom: 1rem;
     border-radius: 0.75rem;
-    border: 2px solid var(--brand-light);
-    background: var(--surface-base);
+    border: 2px solid black;
+    background: transparent;
     font-size: 1rem;
     color: var(--text-secondary);
     cursor: pointer;
@@ -13,13 +13,12 @@
 }
 
 .mc-option:hover {
-    border-color: var(--brand-dark);
-    background-color: var(--surface-base);
+    transform: scale(1.02);
 }
 
 .mc-option--correct {
     border-color: #16a34a;
-    background-color: #ecfdf3;
+    /* background-color: #ecfdf3; */
     color: #14532d;
 }
 
@@ -30,7 +29,7 @@
 
 .mc-option--incorrect {
     border-color: #dc2626;
-    background-color: #fef2f2;
+    /* background-color: #fef2f2; */
     color: #7f1d1d;
 }
 
