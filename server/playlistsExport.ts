@@ -19,8 +19,8 @@ function sanitizePathSegment(segment: string): string {
     return safeSegment.length > 0 ? safeSegment : 'untitled';
 }
 
-function generateExportGroups(): exportGroup[] {
-    return PLAYLISTS_CONFIG.flatMap((group) =>
+function generateExportGroups(config: typeof PLAYLISTS_CONFIG): exportGroup[] {
+    return config.flatMap((group) =>
         group.subfolders.map((subfolder) => ({
             directorySegments: [group.folder, subfolder.subfolder],
             documents: subfolder.playlist.map((documentId) => ({
@@ -43,7 +43,7 @@ export async function exportPlaylists(targetFolder?: string) {
     }
 
     const browser = await chromium.launch();
-    const exportGroups = generateExportGroups();
+    const exportGroups = generateExportGroups(foldersToExport);
 
     for (const group of exportGroups) {
         const displayDirectory = path.join(...group.directorySegments);

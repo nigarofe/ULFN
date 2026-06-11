@@ -24,7 +24,7 @@ export function renderMath(html: string): string {
     // Fast path: if there's no math class, return immediately
     if (!html.includes('math')) return html;
 
-    return html.replace(MATH_REGEX, (match, tag, attrs, innerHtml) => {
+    return html.replace(MATH_REGEX, (match, _tag, attrs, innerHtml) => {
         let texSource = innerHtml.trim();
         if (!texSource) return match;
 
@@ -61,6 +61,5 @@ export function renderMath(html: string): string {
         }
 
         return renderedHtml;
-        tag; // Linting
     });
 }

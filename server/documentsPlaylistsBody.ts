@@ -1,12 +1,4 @@
-import { PLAYLISTS_CONFIG } from './playlists.config';
-
-interface PlaylistsConfig {
-    folder: string;
-    subfolders: {
-        subfolder: string;
-        playlist: number[];
-    }[];
-}
+import { PLAYLISTS_CONFIG, type PlaylistsConfig } from './playlists.config';
 
 const htmlEscapeMap: Record<string, string> = {
     '&': '&amp;',

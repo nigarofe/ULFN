@@ -1,85 +1,166 @@
-# When starting a new version from scratch
-1. Start Vite project
-    npm create vite@latest ulf-navigator -- --template vanilla-ts
-2. Design html and css structure
+# ULFN — ULF Navigator
 
+A local-first study tool for managing, reviewing, and practicing markdown-based exercises with built-in spaced repetition metrics.
 
-# Project Requirements
-From more changed requirements (top) to less (bottom)
+## Overview
 
+ULFN renders markdown documents into interactive exercises — multiple choice, cloze (fill-in-the-blank), keyword scoring, and deterministic problems — with live reload, math rendering (KaTeX), diagram support (Mermaid), and spaced repetition analytics. Documents are organized into playlists and can be exported to PDF.
 
-## Homepage 
-- The homepage shall display a table of the Markdown files
+## Tech Stack
 
-### Homepage table
-- The homepage table header shall display all the keys from the YAML frontmatter of each file, including the markdown file number as the first column
-- When clicked, the homepage table rows shall direct to the dedicated file page
-- The homepage table shall have a filtering and ordering section above the table
+| Layer | Technology |
+|-------|-----------|
+| Client | Vanilla TypeScript, Vite, morphdom, Chart.js |
+| Server | Express 5, EJS templates |
+| Rendering | Pandoc (server mode), KaTeX, Mermaid |
+| Export | Playwright (headless Chromium → PDF) |
+| Validation | Zod, gray-matter |
 
-### Homepage table filtering and ordering section
-- The filtering and ordering section shall allow for filtering by `Discipline` and `Exercise Classification` and ordering by markdown file number through dropdowns
-- When the user selects a filtering or ordering option from the dropdown, the table shall update immediately
-- When the filter is applied, the corresponding column of the table shall disappear
-- The filtering and ordering shall persist if the user exits the homepage and come back
-- The three dropdowns (filter by discipline, filter by exercise classification and ordering) shall be side by side; occupy equal horizontal space; occupy the same width as the table rows 
-- The filtering and ordering shall be client-side and be driven by client component state using localStorage, not URL query parameters
+## Getting Started
 
+### Prerequisites
 
+- [Node.js](https://nodejs.org/) (v20+)
+- [pnpm](https://pnpm.io/)
+- [Pandoc](https://pandoc.org/installing.html) (must be on PATH)
 
+### Installation
 
+```bash
+pnpm install
+```
 
+### Running
 
-## Markdown YAML frontmatter
-- The Markdown files shall be stored in `src/content/markdown` to leverage Astro's Content Collections API
-- The Markdown files shall use YAML frontmatter
-- The frontmatter of Markdown files shall have it's keys aligned in columns by padding with spaces so all colons start at the same tab stop. (Note: tabs are not allowed on YAML frontmatter)
-- The frontmatter of Markdown files shall always contain, and contain only
-  - `Exercise Classification`
-  - `Discipline`
-  - `Source`
-  - `Description`
-- The `Exercise Classification` shall be one of
-  - `Cloze`
-  - `Multiple Choice`
-  - `Open Ended Creation`
-  - `Deterministic Problem`
+Three processes need to run concurrently:
 
-```markdown
+```bash
+# Terminal 1 — Pandoc server (must start first)
+pnpm pandoc-server
+
+# Terminal 2 — Express API server
+pnpm ulfn-server
+
+# Terminal 3 — Vite dev server
+pnpm vite-server
+```
+
+The Vite dev server waits for the Express server (port 3001) before starting, then opens at `http://localhost:5173`.
+
+### Ports
+
+| Service | Port |
+|---------|------|
+| Express API | 3001 |
+| Pandoc | 3030 |
+| Vite | 5173 |
+
+## Project Structure
+
+```
+├── config.ts                  # Shared paths, ports, and constants
+├── index.html                 # Vite entry point (empty body, scripts load per-page)
+│
+├── src/                       # Client-side code (bundled by Vite)
+│   ├── index.ts               # Client router — loads page scripts by pathname
+│   ├── documentSelector.ts    # Browse & filter documents with charts
+│   ├── documentViewer.ts      # View a single document with SSE live reload
+│   ├── documentsPlaylists.ts  # Playlist management and PDF export trigger
+│   ├── initCharts.ts          # Chart.js dashboard (distribution, scatter, weekly)
+│   ├── voiceRecording.ts      # MediaRecorder → MP3 conversion (lamejs)
+│   ├── utils.ts               # Shared client utilities
+│   └── styles/                # CSS organized by component
+│
+├── server/                    # Express API server
+│   ├── index.ts               # Routes, SSE, and fs.watch for live reload
+│   ├── failFast.ts            # Startup validation (files, dirs, URLs, Pandoc)
+│   ├── SRME.ts                # Per-document spaced repetition metrics
+│   ├── SRME.schema.ts         # Zod schema for SRME data
+│   ├── SRMG.ts                # Global/aggregate metrics and chart data
+│   ├── documentSelectorBody.ts    # HTML generation for the document list
+│   ├── documentsPlaylistsBody.ts  # HTML generation for playlists page
+│   ├── playlists.config.ts        # Playlist definitions (folder → documents)
+│   ├── playlistsExport.ts         # Playwright PDF export
+│   ├── ejs_templates/             # EJS partials (cards, viewer, footer, controls)
+│   └── documentViewer/
+│       ├── documentViewerBody.ts  # Orchestrates markdown → HTML pipeline
+│       ├── pandocRenderer.ts      # Pandoc server API client
+│       ├── renderMath.ts          # KaTeX rendering with caching
+│       └── postProcessors.ts      # Exercise-specific HTML transforms
+│
+├── scripts/                   # CLI utilities (run with `npx tsx scripts/<name>`)
+│   ├── info.ts                # Document validation and classification counts
+│   ├── logger.ts              # File-based logging (app.log)
+│   └── normalize-hr-spacing.ts  # Normalizes `---` spacing in markdown files
+│
+├── vite_plugins/
+│   ├── snippet_expander.ts    # Expands macros (/timestamp, /fbe, /keywords) on save
+│   └── code_bundler.ts        # Concatenates source files into .txt bundles
+│
+└── public/
+    ├── documents/             # Markdown exercise files (numbered: 1.md, 2.md, ...)
+    ├── media/                 # Images referenced by documents
+    ├── icons/                 # UI icons
+    └── llm_prompts/           # LLM prompt templates for generating exercises
+```
+
+## Documents
+
+Each document is a numbered markdown file (`public/documents/<id>.md`) with YAML frontmatter:
+
+```yaml
 ---
-Exercise Classification : Multiple Choice
-Discipline              : Mathematics
-Source                  : Some Book, Author, Year
-Description             : This is a sample description of the exercise
+Classification : Multiple Choice Exercise
+Discipline     : Mathematics
+Source          : Some Book, Author, Year
+Description    : Brief description of the exercise
 ---
 ```
 
+### Exercise Types
 
+| Classification | Interactive Features |
+|----------------|---------------------|
+| **Multiple Choice Exercise** | Checkbox options are converted to clickable buttons; answers shuffle on each load |
+| **Cloze Exercise** | `**{answer1\|answer2}**` becomes a text input with real-time validation |
+| **Keywords Exercise** | Student responses are scored against expected keyword rules with highlighting |
+| **Deterministic Problem** | Standard proposition → step-by-step → answer structure |
 
+### Spaced Repetition
 
+Each document has an `# Attempts` section tracking review history:
 
-## Markdown images
-- The images shall be stored in the `src/content/images` directory
-- The images shall be referenced in the Markdown simply as `![](/ps11.jpg)`, markdown will be processed to reference the correct path
-- When an image is missing it shall display an error in the webpage
+```markdown
+# Attempts
+2024-11-07T06:00:00Z 0
+2025-01-24T06:00:00Z 1
+```
 
+Code `1` = solved without help, `0` = needed help. The system computes:
 
+| Metric | Meaning |
+|--------|---------|
+| **DSLA** | Days Since Last Attempt |
+| **LaMI** | Last Memory Interval (days between last two successful attempts) |
+| **PMG-D** | Progress Margin in Days (DSLA − LaMI) |
+| **PMG-X** | Progress Margin Multiplier (DSLA ÷ LaMI); ≤ 1 means due for review |
 
+### Snippet Macros
 
+When editing documents with the Vite server running, these macros auto-expand on save:
 
-## Scripts
-- The scripts folder shall contain a Typescript script to check the validity of the markdown frontmatter
-- The scripts folder shall contain a Typescript script that aligns columns by padding keys with multiple spaces so all colons start at the same tab stop. (Note: tabs are not allowed on YAML frontmatter)
-- The scripts shall be able to be run using `npm run <script-name>`
+| Macro | Expands To |
+|-------|-----------|
+| `/ts` or `/timestamp` | Current ISO timestamp |
+| `/fbe` | Full exercise template (Proposition → Notes → Step-by-step → Answer → Attempts) |
+| `/keywords` | Keywords exercise template |
 
+## Pages
 
+- **`/documentsPlaylists`** — Home page. Lists playlists grouped by folder with export controls.
+- **`/documentSelector`** — Filterable/sortable document list with SRM dashboard charts.
+- **`/documentViewer?id=<n>`** — Renders a single document. Supports playlist navigation (← →), SSE live reload, and voice recording.
 
+## PDF Export
 
-
-# LLM interaction
-- The system shall be chat-interface centric (to eliminate the necessity of paid API and reduce system complexity)
-- The system shall provide, for each exercise classification, a prompt template to generate new exercises using a LLM, stored in `src/llm_prompts/{exerciseClassification.md}`
-- The prompt templates shall be able available at a dedicated page
-- The prompt templates shall each have it's corresponding button which, when pressed, copies the content of it's respective exercise classification to the clipboard
-
-## Multiple Choice
-- The LLM prompts for creating these exercises ask for "plausible distractors." It is easy for an LLM to generate one correct answer and three obviously fake ones.
+Playlists can be exported to PDF via the playlists page. Uses Playwright to render each document in a headless browser with print media styles, then saves to the `exports/` directory.
