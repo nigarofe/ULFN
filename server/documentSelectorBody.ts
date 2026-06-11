@@ -112,7 +112,7 @@ export function getDocumentSelectorBodyHTML(options: RenderOptions): string {
                     <label for="order-by-select">Order by</label>
                     <select id="order-by-select">
                         <option ${isSelected('ID', selectedOrderBy)}>ID</option>
-                        <option ${isSelected('Total Attempts', selectedOrderBy)}>Total Attempts</option> // Added missing option based on sort logic
+                        <option ${isSelected('Total Attempts', selectedOrderBy)}>Total Attempts</option> 
                         <option ${isSelected('DSLA', selectedOrderBy)}>DSLA</option>
                         <option ${isSelected('PMG-D', selectedOrderBy)}>PMG-D</option>
                         <option ${isSelected('PMG-X', selectedOrderBy)}>PMG-X</option>
