@@ -15,27 +15,30 @@ export function snippet_expander(): Plugin {
                 if (!filePath.startsWith(WATCH_DIR)) return;
 
                 try {
-                    const content = await fsp.readFile(filePath, 'utf-8');
-                    let updatedContent = "";
+                    let content = await fsp.readFile(filePath, 'utf-8');
+                    let hasChanges = false;
 
-                    if (content.includes('/ts')) {
+                    if (/\/ts\b/.test(content)) {
                         const isoTimestamp = new Date().toISOString().slice(0, -5) + 'Z';
-                        updatedContent = content.replace(/\/ts/g, isoTimestamp);
+                        content = content.replace(/\/ts\b/g, isoTimestamp);
+                        hasChanges = true;
                     }
 
-                    if (content.includes('/fbe')) {
+                    if (/\/fbe\b/.test(content)) {
                         const psaaContent = `# Proposition\n\n\n# Notes\n\n\n# Step-by-step\n\n\n# Answer\n\n\n# Attempts\n`;
-                        updatedContent = content.replace(/\/fbe/g, psaaContent);
+                        content = content.replace(/\/fbe\b/g, psaaContent);
+                        hasChanges = true;
                     }
 
-                    if (content.includes('/keywords')) {
+                    if (/\/keywords\b/.test(content)) {
                         const keywordsContent = `# Student Prompt\n\n\n# Notes\n\n\n# Iterations\n\n\n# Expected Keywords\n\n\n# Attempts\n`;
-                        updatedContent = content.replace(/\/keywords/g, keywordsContent);
+                        content = content.replace(/\/keywords\b/g, keywordsContent);
+                        hasChanges = true;
                     }
 
                     // Only write to the disk if a macro was actually found and replaced
-                    if (updatedContent !== "") {
-                        await fsp.writeFile(filePath, updatedContent, 'utf-8');
+                    if (hasChanges) {
+                        await fsp.writeFile(filePath, content, 'utf-8');
                         console.log(`✅ Updated: ${filePath}`);
                     }
                 } catch (error) {

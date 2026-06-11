@@ -43,15 +43,15 @@
             </tr>
             <tr>
                 <td><strong>DSLA</strong></td>
-                <td><%- element['SRME']['DSLA'] || '&nbsp;' %></td>
+                <td><%- element['SRME']['DSLA'] ?? '&nbsp;' %></td>
                 <td><strong>LaMI</strong></td>
-                <td><%- element['SRME']['LaMI'] || '&nbsp;' %></td>
+                <td><%- element['SRME']['LaMI'] ?? '&nbsp;' %></td>
             </tr>
             <tr>
                 <td><strong>PMG-D</strong></td>
-                <td><%- element['SRME']['PMG-D'] || '&nbsp;' %></td>
+                <td><%- element['SRME']['PMG-D'] ?? '&nbsp;' %></td>
                 <td><strong>PMG-X</strong></td>
-                <td><%- element['SRME']['PMG-X'] || '&nbsp;' %></td>
+                <td><%- element['SRME']['PMG-X'] ?? '&nbsp;' %></td>
             </tr>
         </tbody>
     </table>
@@ -65,19 +65,19 @@
         <tbody>
             <tr>
                 <td><strong>Classification</strong></td>
-                <td><%- element['Classification'] || '' %></td>
+                <td><%- element['Classification'] ?? '' %></td>
             </tr>
             <tr>
                 <td><strong>Discipline</strong></td>
-                <td><%- element['Discipline'] || '' %></td>
+                <td><%- element['Discipline'] ?? '' %></td>
             </tr>
             <tr>
                 <td><strong>Source</strong></td>
-                <td><%- element['Source'] || '' %></td>
+                <td><%- element['Source'] ?? '' %></td>
             </tr>
             <tr>
                 <td><strong>Description</strong></td>
-                <td><%- element['Description'] || '' %></td>
+                <td><%- element['Description'] ?? '' %></td>
             </tr>
         </tbody>
     </table>

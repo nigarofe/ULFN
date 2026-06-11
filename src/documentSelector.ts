@@ -33,11 +33,11 @@ async function update() {
     initCharts();
 }
 
-inputs.forEach(input => {
-    const el = document.getElementById(input.selectId) as HTMLSelectElement;
-    if (!el) { console.warn(`Element with id ${input.selectId} not found.`); return; }
-    el.onchange = () => {
-        params.set(input.param, el.value);
+document.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement;
+    const input = inputs.find(i => i.selectId === target.id);
+    if (input) {
+        params.set(input.param, target.value);
         window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
         update();
     }
