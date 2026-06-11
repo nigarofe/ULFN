@@ -1,6 +1,7 @@
 import './failFast';
 
 import fs from 'node:fs';
+import path from 'node:path';
 import express, { type Request, type Response, type NextFunction } from 'express';
 
 import { logMessage } from '../scripts/logger';
@@ -17,7 +18,10 @@ interface ClientConnection { res: Response; documentId: number; }
 const clients = new Set<ClientConnection>();
 let timeout: NodeJS.Timeout;
 
-app.listen(ULF_SERVER_PORT, () => { console.log(`Server listening on ${ULF_SERVER_URL}`); });
+app.listen(ULF_SERVER_PORT, () => {
+    console.log(`Server listening on ${ULF_SERVER_URL}`);
+    ensureEmptyHighestIdDocument();
+});
 
 
 // Performance logging middleware
@@ -92,12 +96,40 @@ app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
 });
 
 
+function ensureEmptyHighestIdDocument() {
+    try {
+        const files = fs.readdirSync(DOCUMENTS_DIR);
+        const ids = files
+            .filter(f => f.endsWith('.md'))
+            .map(f => parseInt(f.replace('.md', '')))
+            .filter(id => !isNaN(id) && id <= 900);
+
+        if (ids.length === 0) return;
+
+        const maxId = Math.max(...ids);
+        const maxIdFilePath = path.join(DOCUMENTS_DIR, `${maxId}.md`);
+
+        const content = fs.readFileSync(maxIdFilePath, 'utf-8');
+        if (content.trim().length > 0) {
+            const nextId = maxId + 1;
+            if (nextId <= 900) {
+                fs.writeFileSync(path.join(DOCUMENTS_DIR, `${nextId}.md`), '');
+                logMessage(`INFO: Created new empty document ${nextId}.md`);
+            }
+        }
+    } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        logMessage(`ERROR: ensureEmptyHighestIdDocument failed - ${message}`);
+    }
+}
+
 fs.watch(DOCUMENTS_DIR, (_eventType, filename) => {
     if (!filename || !filename.endsWith('.md')) { return; }
     const updatedId = parseInt(filename.replace('.md', ''));
     clearTimeout(timeout);
 
     timeout = setTimeout(async () => {
+        ensureEmptyHighestIdDocument();
         for (const client of clients) {
             if (client.documentId !== updatedId) { continue; }
             try {
