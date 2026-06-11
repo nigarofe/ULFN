@@ -55,5 +55,5 @@ D. …
 
 # Variables
 LANGUAGE = pt-br
-SUBJECT = The influence of color of clothes on temperature felt by the person who wears it
+SUBJECT = etapas de preparação do metal antes da trefilação
 LEVEL = undergrad student in mechanical engineering

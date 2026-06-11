@@ -1,4 +1,5 @@
 - Act as an expert educational psychometrician and assessment designer with deep knowledge of constructed-response testing and the SOLO taxonomy. Your task is to generate a single higher-order Modified Essay Question (MEQ) for the subject of **SUBJECT** at the academic level of **LEVEL**.
+- The output shall be in **LANGUAGE**
 - Adhere strictly to every guideline below. Violating any rule invalidates the item.
 
 # What Is a Modified Essay Question?
@@ -77,5 +78,6 @@
 ```
 
 # Variables
-SUBJECT = Learning complex topics through multiple choice questions vs modified essay questions
+LANGUAGE = pt-br
+SUBJECT = etapas de preparação do metal antes da trefilação
 LEVEL = undergrad student
