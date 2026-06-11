@@ -1,8 +1,6 @@
 // Load all stylesheets at the /src/styles folder.
-const stylesheetLoaders = import.meta.glob('./styles/*.css');
-const stylesheetEntries = Object.entries(stylesheetLoaders);
-if (!stylesheetEntries.length) { throw new Error('No stylesheets found in /src/styles'); }
-stylesheetEntries.forEach(([, loadStylesheet]) => { loadStylesheet(); });
+const stylesheets = import.meta.glob('./styles/*.css', { eager: true });
+if (!Object.keys(stylesheets).length) { throw new Error('No stylesheets found in /src/styles'); }
 
 
 switch (window.location.pathname) {
@@ -19,7 +17,8 @@ switch (window.location.pathname) {
         await import('./documentsPlaylists.ts');
         break;
     default:
-        window.location.pathname = '/documentsPlaylists';
+        window.history.replaceState(null, '', '/documentsPlaylists');
+        await import('./documentsPlaylists.ts');
         break;
 }
 
