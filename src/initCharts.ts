@@ -1,17 +1,13 @@
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
-let chart1: Chart | null = null;
-let chart2: Chart | null = null;
-let chart3: Chart | null = null;
+const charts: (Chart | null)[] = [null, null, null];
 
 export function initCharts() {
     const dashboardContainer = document.querySelector('.dashboard-container') as HTMLElement | null;
     if (!dashboardContainer) return;
 
-    if (chart1) chart1.destroy();
-    if (chart2) chart2.destroy();
-    if (chart3) chart3.destroy();
+    charts.forEach(c => c?.destroy());
 
     const chart1_data = JSON.parse(dashboardContainer.dataset.chart1 as string);
     const chart2_data = JSON.parse(dashboardContainer.dataset.chart2 as string);
@@ -20,7 +16,7 @@ export function initCharts() {
 
     const ctx = document.getElementById('exerciseDistributionChart') as HTMLCanvasElement | null;
     if (!ctx) return;
-    chart1 = new Chart(ctx, {
+    charts[0] = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['PMG-X <= 1', 'PMG-X > 1', 'With Help', 'Single Attempt', 'Never Attempted'],
@@ -73,7 +69,7 @@ export function initCharts() {
 
     const ctx2 = document.getElementById('urgencyValueChart') as HTMLCanvasElement | null;
     if (!ctx2) return;
-    chart2 = new Chart(ctx2, {
+    charts[1] = new Chart(ctx2, {
         type: 'scatter',
         data: {
             datasets: [{
@@ -127,7 +123,7 @@ export function initCharts() {
 
     const ctx3 = document.getElementById('tLamiIncreaseChart') as HTMLCanvasElement | null;
     if (!ctx3) return;
-    chart3 = new Chart(ctx3, {
+    charts[2] = new Chart(ctx3, {
         type: 'bar',
         data: {
             labels: chart3_labels,

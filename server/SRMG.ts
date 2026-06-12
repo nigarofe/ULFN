@@ -20,8 +20,9 @@ export function generateSRMG(filteredEntries: SRMEEntry[]) {
         const pmgXValue = entry['SRME']['PMG-X'];
 
         // First chart
-        if (typeof (pmgXValue) === 'number' && pmgXValue <= 1) pmg_x_smaller_equal_1_count++;
-        else if (typeof (pmgXValue) === 'number' && pmgXValue > 1) pmg_x_greater_1_count++;
+        if (typeof pmgXValue === 'number') {
+            pmgXValue <= 1 ? pmg_x_smaller_equal_1_count++ : pmg_x_greater_1_count++;
+        }
         if (entry['SRME']['LAS'] === 'With Help') las_equal_wh++;
         if (entry['SRME']['LAS'] === 'Without Help' && entry['SRME']['Total Attempts'] === 1) single_attempts++;
         if (entry['SRME']['Total Attempts'] === 0) never_attempted++;

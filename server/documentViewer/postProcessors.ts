@@ -179,6 +179,10 @@ function stripTags(value: string): string {
     return value.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 }
 
+function parseWords(raw: string): string[] {
+    return raw.split(',').map(w => w.trim().toLowerCase()).filter(w => w.length > 0).sort((a, b) => b.length - a.length);
+}
+
 function parseRulesFromHtml(sectionHtml: string): { rules: RegexRule[]; requiredTotal: number } {
     const rules: RegexRule[] = [];
     let totalRequired = 0;
@@ -194,11 +198,7 @@ function parseRulesFromHtml(sectionHtml: string): { rules: RegexRule[]; required
         }
 
         const requiredCount = parseInt(ruleMatch[1], 10);
-        const words = ruleMatch[2]
-            .split(',')
-            .map(w => w.trim().toLowerCase())
-            .filter(w => w.length > 0)
-            .sort((a, b) => b.length - a.length);
+        const words = parseWords(ruleMatch[2]);
         if (words.length > 0) {
             rules.push({ requiredCount, words });
             totalRequired += requiredCount;
@@ -210,11 +210,7 @@ function parseRulesFromHtml(sectionHtml: string): { rules: RegexRule[]; required
 
     while ((itemMatch = inlineRuleRegex.exec(textWithoutListItems)) !== null) {
         const requiredCount = parseInt(itemMatch[1], 10);
-        const words = itemMatch[2]
-            .split(',')
-            .map(w => w.trim().toLowerCase())
-            .filter(w => w.length > 0)
-            .sort((a, b) => b.length - a.length);
+        const words = parseWords(itemMatch[2]);
         if (words.length > 0) {
             rules.push({ requiredCount, words });
             totalRequired += requiredCount;
