@@ -132,7 +132,6 @@ body.addEventListener('input', (e) => {
 
 
 const previousExerciseButton = document.getElementById('previousExerciseButton') as HTMLButtonElement;
-// const shufflePlaylistButton = document.getElementById('shufflePlaylistButton') as HTMLButtonElement;
 const nextExerciseButton = document.getElementById('nextExerciseButton') as HTMLButtonElement;
 
 function getPLaylistInfo() {
@@ -191,16 +190,3 @@ window.addEventListener('keydown', (event) => {
         goToNextExercise();
     }
 });
-
-// // Maybe remove this feature? I don't think I ever used it
-// shufflePlaylistButton.addEventListener('click', () => {
-//     const { playlistArray, currentIndex } = getPLaylistInfo();
-//     const currentId = playlistArray[currentIndex];
-//     const otherIds = playlistArray.filter(id => id !== currentId);
-//     for (let i = otherIds.length - 1; i > 0; i--) {
-//         const j = Math.floor(Math.random() * (i + 1));
-//         [otherIds[i], otherIds[j]] = [otherIds[j], otherIds[i]];
-//     }
-//     const shuffledPlaylist = [currentId, ...otherIds];
-//     window.location.href = `/documentViewer?id=${currentId}&playlist=${shuffledPlaylist.join(',')}`;
-// });
