@@ -17,33 +17,30 @@ export function getDocumentSelectorBodyHTML(options: RenderOptions): string {
     const templateStr = fs.readFileSync(DOCUMENT_CARD_TEMPLATE_PATH, 'utf-8');
     const SRME = generateSRME();
 
-    const selectedDiscipline = options.discipline;
-    const selectedClassification = options.classification;
-    const selectedOrderBy = options.orderBy;
-    const selectedOrder = options.order;
+    const { discipline, classification, orderBy, order } = options;
 
     let filteredEntries = SRME.filter((element: SRMEEntry) => {
-        const disciplineMatch = selectedDiscipline === 'All' || element['Discipline'] === selectedDiscipline;
-        const classificationMatch = selectedClassification === 'All' || element['Classification'] === selectedClassification;
+        const disciplineMatch = discipline === 'All' || element['Discipline'] === discipline;
+        const classificationMatch = classification === 'All' || element['Classification'] === classification;
         return disciplineMatch && classificationMatch;
     });
 
     filteredEntries.sort((a: SRMEEntry, b: SRMEEntry) => {
         let comparison = 0;
-        if (selectedOrderBy === 'ID') {
+        if (orderBy === 'ID') {
             comparison = a['ID'] - b['ID'];
-        } else if (selectedOrderBy === 'Total Attempts') {
+        } else if (orderBy === 'Total Attempts') {
             comparison = a['SRME']['Total Attempts'] - b['SRME']['Total Attempts'];
-        } else if (selectedOrderBy === 'DSLA') {
+        } else if (orderBy === 'DSLA') {
             comparison = a['SRME']['DSLA'] !== null && b['SRME']['DSLA'] !== null ? a['SRME']['DSLA'] - b['SRME']['DSLA'] : 0;
-        } else if (selectedOrderBy === 'PMG-D') {
+        } else if (orderBy === 'PMG-D') {
             comparison = a['SRME']['PMG-D'] !== null && b['SRME']['PMG-D'] !== null ? a['SRME']['PMG-D'] - b['SRME']['PMG-D'] : 0;
-        } else if (selectedOrderBy === 'PMG-X') {
+        } else if (orderBy === 'PMG-X') {
             const aPMGX = typeof (a['SRME']['PMG-X']) === 'number' ? a['SRME']['PMG-X'] : -1;
             const bPMGX = typeof (b['SRME']['PMG-X']) === 'number' ? b['SRME']['PMG-X'] : -1;
             comparison = aPMGX - bPMGX;
         }
-        return selectedOrder === 'Ascending' ? comparison : -comparison;
+        return order === 'Ascending' ? comparison : -comparison;
     });
 
     // 4. Generate Options (with 'selected' attribute logic)
@@ -63,8 +60,8 @@ export function getDocumentSelectorBodyHTML(options: RenderOptions): string {
         return html;
     };
 
-    const selectDisciplineOptionsHtml = createOptions(possibleDisciplines, selectedDiscipline);
-    const selectClassificationOptionsHtml = createOptions(possibleClassifications, selectedClassification);
+    const selectDisciplineOptionsHtml = createOptions(possibleDisciplines, discipline);
+    const selectClassificationOptionsHtml = createOptions(possibleClassifications, classification);
 
     // Helper for static selects
     const isSelected = (val: string, current: string) => val === current ? 'selected' : '';
@@ -111,19 +108,19 @@ export function getDocumentSelectorBodyHTML(options: RenderOptions): string {
                 <div>
                     <label for="order-by-select">Order by</label>
                     <select id="order-by-select">
-                        <option ${isSelected('ID', selectedOrderBy)}>ID</option>
-                        <option ${isSelected('Total Attempts', selectedOrderBy)}>Total Attempts</option> 
-                        <option ${isSelected('DSLA', selectedOrderBy)}>DSLA</option>
-                        <option ${isSelected('PMG-D', selectedOrderBy)}>PMG-D</option>
-                        <option ${isSelected('PMG-X', selectedOrderBy)}>PMG-X</option>
+                        <option ${isSelected('ID', orderBy)}>ID</option>
+                        <option ${isSelected('Total Attempts', orderBy)}>Total Attempts</option> 
+                        <option ${isSelected('DSLA', orderBy)}>DSLA</option>
+                        <option ${isSelected('PMG-D', orderBy)}>PMG-D</option>
+                        <option ${isSelected('PMG-X', orderBy)}>PMG-X</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="order-select">Order</label>
                     <select id="order-select">
-                        <option ${isSelected('Ascending', selectedOrder)}>Ascending</option>
-                        <option ${isSelected('Descending', selectedOrder)}>Descending</option>
+                        <option ${isSelected('Ascending', order)}>Ascending</option>
+                        <option ${isSelected('Descending', order)}>Descending</option>
                     </select>
                 </div>
             </section>

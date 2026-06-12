@@ -107,6 +107,11 @@ body.addEventListener('click', (e) => {
     }
 });
 
+function setClozeState(el: Element, state: 'correct' | 'partial' | 'incorrect') {
+    el.classList.remove('cloze-input--correct', 'cloze-input--incorrect', 'cloze-input--partial');
+    el.classList.add(`cloze-input--${state}`);
+}
+
 body.addEventListener('input', (e) => {
     const target = e.target as HTMLTextAreaElement | HTMLInputElement;
     if (!target.classList.contains('cloze-input')) { return; }
@@ -117,16 +122,9 @@ body.addEventListener('input', (e) => {
 
     try { answerList = JSON.parse(rawAnswers); } catch { answerList = []; }
 
-    if (answerList.includes(userAnswer)) {
-        target.classList.add('cloze-input--correct');
-        target.classList.remove('cloze-input--incorrect', 'cloze-input--partial');
-    } else if (userAnswer.length > 0 && answerList.some(ans => ans.startsWith(userAnswer))) {
-        target.classList.add('cloze-input--partial');
-        target.classList.remove('cloze-input--correct', 'cloze-input--incorrect');
-    } else {
-        target.classList.add('cloze-input--incorrect');
-        target.classList.remove('cloze-input--correct', 'cloze-input--partial');
-    }
+    if (answerList.includes(userAnswer)) { setClozeState(target, 'correct'); }
+    else if (userAnswer.length > 0 && answerList.some(ans => ans.startsWith(userAnswer))) { setClozeState(target, 'partial'); }
+    else { setClozeState(target, 'incorrect'); }
 });
 
 
@@ -147,6 +145,9 @@ function getPLaylistInfo() {
     return { playlistArray, currentIndex };
 }
 
+previousExerciseButton.addEventListener('click', goToPreviousExercise);
+nextExerciseButton.addEventListener('click', goToNextExercise);
+
 function goToPreviousExercise() {
     const { playlistArray, currentIndex } = getPLaylistInfo();
     if (currentIndex == 0) { return; }
@@ -160,14 +161,6 @@ function goToNextExercise() {
     const nextId = playlistArray[currentIndex + 1];
     loadDocument(parseInt(nextId));
 }
-
-previousExerciseButton.addEventListener('click', () => {
-    goToPreviousExercise();
-});
-
-nextExerciseButton.addEventListener('click', () => {
-    goToNextExercise();
-});
 
 window.addEventListener('keydown', (event) => {
     const target = event.target as HTMLElement | null;
