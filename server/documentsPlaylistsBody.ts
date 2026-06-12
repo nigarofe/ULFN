@@ -13,9 +13,7 @@ function escapeHtml(value: string): string {
 }
 
 function buildPlaylistLink(playlist: number[]): string {
-    if (!playlist.length) {
-        return '#';
-    }
+    if (!playlist.length) { return; }
 
     const firstId = playlist[0];
     const playlistParam = playlist.join(',');
@@ -23,8 +21,6 @@ function buildPlaylistLink(playlist: number[]): string {
 }
 
 export function getPlaylistsBodyHTML(config: PlaylistsConfig[] = PLAYLISTS_CONFIG): string {
-    // const cellStyle = 'style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"';
-    // const headerCellStyle = 'style="border: 1px solid #ddd; padding: 10px; text-align: left;"';
     const hasFolders = config.length > 0;
     const folderOptions = hasFolders
         ? config.map((discipline) => {
