@@ -152,7 +152,6 @@ function goToPreviousExercise() {
     if (currentIndex == 0) { return; }
     const previousId = playlistArray[currentIndex - 1];
     loadDocument(parseInt(previousId));
-    // window.location.href = `/documentViewer?id=${previousId}&playlist=${playlistArray}`;
 }
 
 function goToNextExercise() {
@@ -160,7 +159,6 @@ function goToNextExercise() {
     if (currentIndex == playlistArray.length - 1) { return; }
     const nextId = playlistArray[currentIndex + 1];
     loadDocument(parseInt(nextId));
-    // window.location.href = `/documentViewer?id=${nextId}&playlist=${playlistArray}`;
 }
 
 previousExerciseButton.addEventListener('click', () => {
