@@ -2,6 +2,7 @@ minimumReleaseAge: 10080 # 7 days
 
 allowBuilds:
   esbuild: true
+  sharp: true
 
 minimumReleaseAgeExclude:
   - tinyglobby@0.2.17
